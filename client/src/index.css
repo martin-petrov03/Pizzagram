@@ -1,0 +1,130 @@
+html, body{
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;  
+  overflow:visible;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 97.75%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.login-container, .home-container, .add-product {
+  display: block;
+  margin: 0 2em;
+  max-width: 100em;
+  min-width: 15em;
+  text-align: center;
+}
+
+.login-container label {
+  display: block;
+}
+
+.login-btn {
+  padding: 1em;
+}
+
+.error-message {
+  color: red;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+  justify-items: center;
+  justify-content: space-between;
+  padding-top: 5em;
+  margin: 0 auto;
+}
+
+.main-container .loader {  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.main-message {
+  text-align: center;
+}
+
+.product-item {  
+  width: 65%;  
+  padding: 3em;
+  border: 1px solid #000;
+  border-radius: 3em;
+  margin-bottom: 5em;
+  position: relative;  
+}
+
+.product-item img {
+  max-width: 90%;
+  height: auto;
+}
+
+.product-item .title {
+  word-wrap: break-word;
+}
+
+.product-item .description {
+  padding: 0 1em;
+  word-wrap: break-word;
+}
+
+.product-item .actions {
+  display: flex;
+  justify-content: space-between;  
+}
+
+.product-item .likes-count {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.product-item .delete-icon {
+  font-size: 2em;
+  cursor: pointer;
+  color: darkblue;
+  margin-left: auto;
+  margin-right: 0.5em;
+}
+
+.product-item .like-icon {
+  font-size: 2em;
+  margin-right: 1em;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0.5;
+  color: red;
+}
+
+.product-item .liked-icon {
+  font-size: 2em;
+  margin-right: 1em;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0.5;
+  color: darkred;
+}
+
+@media only screen and (max-width: 530px) {  
+  .product-item img {
+    width: 17em;
+    height: auto;
+  }
+}
