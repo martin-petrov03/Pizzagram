@@ -53,20 +53,16 @@
     }
 }
   
-@media only screen and (max-width: 900px) {
-    .greeting {
-      display: none;
-    }
-  
-    .site-logo {    
-      font-size: 2em;
-      margin: 0.5em;
-      margin-left: 3em;   
-    }
-  
-    .nav {
-      margin: 0;
-    }
+@media only screen and (max-width: 900px) {  
+  .site-logo {    
+    font-size: 2em;
+    margin: 0.5em;
+    margin-left: 3em;   
+  }
+
+  .nav {
+    margin: 0;
+  }
 }
 
 @media only screen and (min-width: 900px) {  

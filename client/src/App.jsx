@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Register from './pages/Register';
+import Register from './pages/Register/Register';
 import Error from './pages/Error';
 import AddProduct from './pages/AddProduct/AddProduct';
 import Navbar from "./components/Navbar/Navbar";

@@ -1,35 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Input, InputLabel } from '@material-ui/core';
-import Cookie from 'js-cookie';
-import Error from '../components/Error';
-import authService from '../services/auth-service';
+import Cookies from 'js-cookie';
+import Error from '../../components/Error';
+import authService from '../../services/auth-service';
+import validator from './validator';
 
 const Register = (props) => {
-  if (Cookie.get('token')) {
+  if (Cookies.get('token')) {
     props.history.push('/');
   }
   
   const [inputs, setInputs] = useState({});
   const [error, setError] = useState('');  
-  
-  const validateForm = () => {
-    setError('');
-
-    if(inputs.password && inputs.password.length < 5) {
-      setError('Password should be minimum 5 characters!');
-    }
-    if(inputs.username && inputs.username.length < 5) {
-      setError('Invalid username!');
-    }
-    if(inputs.email && inputs.email.length <= 4) {
-      setError('Invalid email!');
-    }
-
-    if(error.length) {      
-      return false;
-    }
-    return true;
-  }
 
   const handleChange = (event) => {
     event.persist();
@@ -43,8 +25,9 @@ const Register = (props) => {
 
     event.preventDefault();    
     
-    if(!validateForm()) {    
-      setError('Invalid data!');
+    const validationMessage = validator(email, username, password);
+    if(validationMessage !== '') {
+      setError(validationMessage);
     } else {
       authService.register(email, username, password)         
         .then(status => {          

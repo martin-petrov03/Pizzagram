@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MatirialIcons from 'material-icons';
 import { CircularProgress } from '@material-ui/core';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import Footer from '../components/Footer/Footer';
 import productService from '../services/product-service'
 
 const Home = (props) => {
   const [products, setProducts] = useState([]);
+  const [likedProducts, setLikedProducts] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     productService.load()
-      .then(products => {
-        console.log(products);
+      .then((obj) => {
+        const products = obj.products;
+        const likedProducts = obj.likedProducts;
+  
         setProducts(products);
+        setLikedProducts(likedProducts);
         setIsLoading(false);        
       });
   }, []);
@@ -33,12 +37,12 @@ const Home = (props) => {
   const like = (event) => {
     const productId = event.target.getAttribute('productid');    
 
-    if(!Cookie.get('token')) {   
+    if(!Cookies.get('token')) {   
       props.history.push('/login');
       return;
     }
 
-    if(Cookie.get('likedProductsIds').includes(productId)) {
+    if(Cookies.get('likedProductsIds').includes(productId)) {
       return;
     }
 
@@ -46,7 +50,7 @@ const Home = (props) => {
     
     productService.like(productId)
       .then(() => {
-        let likedProductsIds = Cookie.get('likedProductsIds');        
+        let likedProductsIds = Cookies.get('likedProductsIds');        
         
         if(likedProductsIds.length) {
           likedProductsIds += ` ${productId}`;
@@ -54,7 +58,7 @@ const Home = (props) => {
           likedProductsIds = productId; 
         }
 
-        Cookie.set('likedProductsIds', likedProductsIds);
+        Cookies.set('likedProductsIds', likedProductsIds);
         
         setIsLiked(true);
       });
@@ -82,10 +86,8 @@ const Home = (props) => {
 
   const ToggleLikeIconColor = (productId) => {
     let likeBtnClass = 'material-icons like-icon';
-    if(Cookie.get('likedProductsIds')) {
-      if(Cookie.get('likedProductsIds').includes(productId)) {
-        likeBtnClass = 'material-icons liked-icon';
-      }
+    if(likedProducts.includes(productId)) {    
+      likeBtnClass = 'material-icons liked-icon';      
     }
     if(isLiked)
     {
@@ -114,9 +116,9 @@ const Home = (props) => {
               <div className="actions">
                 <span className="likes-count">Likes: {product.likes}</span>
                 {
-                  ToggleLikeIconColor(product._id)        
+                  ToggleLikeIconColor(product._id)
                 }
-                {product.author === Cookie.get('userId') ? <i className="material-icons delete-icon" onClick={deleteProduct} productid={product._id}>delete</i> : null}
+                {product.author === Cookies.get('userId') ? <i className="material-icons delete-icon" onClick={deleteProduct} productid={product._id}>delete</i> : null}
               </div>
             </div>
           ))}

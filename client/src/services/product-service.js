@@ -17,7 +17,10 @@ const laptopService = {
         const res = await axios.get(BASE_URL + 'products/all');
         
         if(res.status === 200) {
-            return res.data.products;
+            return {
+                products: res.data.products,
+                likedProducts: res.data.likedProducts
+            };            
         }
         return null;
     },
@@ -26,7 +29,7 @@ const laptopService = {
         try {
             res = await axios.post('http://localhost:3001/products/like/' + productId);
         }
-        catch(err) {
+        catch(err) {            
             return err.response.status;
         }
         return res.status;

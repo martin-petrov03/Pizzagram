@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Button, Input, InputLabel } from '@material-ui/core';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 import Error from '../components/Error';
 import { AuthContext } from '../contexts/AuthContext';
 import authService from '../services/auth-service';
@@ -36,7 +36,7 @@ const Login = (props) => {
    
     authService.login(email, password)
       .then((status) => {        
-        if(status >= 200 && status < 300 && Cookie.get('username') && Cookie.get('userId')) {
+        if(status >= 200 && status < 300 && Cookies.get('username') && Cookies.get('userId')) {
           login();
           props.history.push('/');
           return;

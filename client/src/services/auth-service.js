@@ -25,8 +25,7 @@ const authService = {
         if(res.status === 200) { 
             Cookie.set('token', res.data.token, { expires: 100 });
             Cookie.set('username', res.data.username);
-            Cookie.set('userId', res.data.userId);
-            Cookie.set('likedProductsIds', res.data.likedProductsIds);            
+            Cookie.set('userId', res.data.userId);               
         }
 
         return res.status;
@@ -34,8 +33,7 @@ const authService = {
     logout: () => {        
         Cookie.set('token', '');
         Cookie.set('username', '');
-        Cookie.set('userId', '');
-        Cookie.set('likedProductsIds', []);
+        Cookie.set('userId', '');        
     },
     register: async(email, username, password) => {        
         let res;
