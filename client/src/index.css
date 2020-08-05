@@ -48,7 +48,14 @@ code {
   justify-items: center;
   justify-content: space-between;
   padding-top: 5em;
-  margin: 0 auto;
+  margin: 0 auto;  
+}
+
+.main-container .add-link span {
+  text-align: center;
+  font-size: 2.5em;
+  color: #000;
+  margin-bottom: 1em;
 }
 
 .main-container .loader {  

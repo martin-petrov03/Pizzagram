@@ -21,18 +21,20 @@ const laptopService = {
         }
         return null;
     },
-    loadAccessoryById: async(id) => {
-        const res = await axios.get(BASE_URL + 'accessories/' + id);
-        
-        if(res.status === 200) {
-            return res.data.accessory;
+    like: async(productId) => {
+        let res;
+        try {
+            res = await axios.post('http://localhost:3001/products/like/' + productId);
         }
-        return null;
+        catch(err) {
+            return err.response.status;
+        }
+        return res.status;
     },
-    delete: async(id) => {
+    delete: async(productId) => {
         let res;        
         try {
-            res = await axios.delete(BASE_URL + `accessories/delete/${id}`);
+            res = await axios.post('http://localhost:3001/products/delete/' + productId);
         }
         catch(err) {
             return err.response.status;

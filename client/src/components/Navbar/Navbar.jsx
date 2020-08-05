@@ -5,18 +5,15 @@ import './index.css';
 import { AuthContext } from '../../contexts/AuthContext';
 
 class Navbar extends Component {
-  static contextType = AuthContext;
-  constructor(props) {
-    super(props);    
-  }
+  static contextType = AuthContext;  
 
-  logout = async() => {
+  logout = () => {
     const { logout } = this.context;
     logout();
     Cookies.set('token', '');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('likedProductsIds');
+    Cookies.remove('username');
+    Cookies.remove('userId');
+    Cookies.remove('likedProductsIds');
   }
 
   render() {
@@ -28,8 +25,7 @@ class Navbar extends Component {
               this.context.isAuthenticated
                 ?(
                   <Fragment>
-                    <li className="greeting"><Link to="">Hello, {localStorage.getItem('username')}</Link></li>
-                    <li><Link to="/product/add">Add Product</Link></li>
+                    <li className="greeting"><Link to="">Hello, {localStorage.getItem('username')}</Link></li>                    
                     <li><Link to="" onClick={this.logout}>Logout</Link></li>
                   </Fragment>
                 )

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import MatirialIcons from 'material-icons';
 import { CircularProgress } from '@material-ui/core';
 import Cookie from 'js-cookie';
-import axios from 'axios';
 import Footer from '../components/Footer/Footer';
 import productService from '../services/product-service'
 
@@ -44,19 +44,12 @@ const Home = (props) => {
 
     increaseLikes(productId);
     
-    axios.post('http://localhost:3001/products/like/' + productId, 
-    {
-      "headers": {
-        "Content-Type": "application/json",
-        "auth": Cookie.get('token'),
-          "userId": Cookie.get('userId')
-        }
-      })
+    productService.like(productId)
       .then(() => {
         let likedProductsIds = Cookie.get('likedProductsIds');        
         
         if(likedProductsIds.length) {
-          likedProductsIds += `, ${productId}`;
+          likedProductsIds += ` ${productId}`;
         } else {
           likedProductsIds = productId; 
         }
@@ -70,20 +63,15 @@ const Home = (props) => {
   const deleteProduct = (event) => {
     const productId = event.target.getAttribute('productid');
 
-    axios.post('http://localhost:3001/products/delete/' + productId, 
-      {
-        "headers": {
-          "auth": Cookie.get('token'),
-          "Content-Type": "application/json"
-      }})
+    productService.delete(productId)
       .then(() => {
-        const products = [];
-        setProducts.forEach((product, index) => {
+        const allProducts = [];
+        products.forEach((product) => {
           if(product._id !== productId) {
-            products.push(product);        
+            allProducts.push(product);
           }
         });
-        setProducts(products);
+        setProducts(allProducts);
       })
       .catch(err => {
         if(err.tokenIsOutDated) {
@@ -104,7 +92,7 @@ const Home = (props) => {
       setIsLiked(false);
       likeBtnClass = 'material-icons liked-icon';      
     }
-    return  <i className={likeBtnClass} onClick={like} productid={productId}>favorite</i>;
+    return <i className={likeBtnClass} onClick={like} productid={productId}>favorite</i>;
   }
   
   if(isLoading) {
@@ -115,8 +103,9 @@ const Home = (props) => {
     );
   }else if(products.length) {      
     return (
-      <div>
+      <div>        
         <main className="main-container">
+        <Link to="/product/add" className="add-link"><span className="material-icons">add_box</span></Link>        
           {products.map(product => (
             <div className="product-item" key={product._id}>
               <img src={product.url} alt={product.name} />
