@@ -1,20 +1,40 @@
 const User = require('../models/User');
 const Product = require('../models/Product');
+const ProductUser = require('../models/ProductUser');
 const isAuth = require('../middleware/isAuth');
 
-const getAllProducts = (req, res) => {
-    Product.find().then(products => {        
+const getAllProducts = async(req, res) => {
+    try {
+        let likedProducts = [];
+        const products = await Product.find();
+
+        if(req.headers.userid) {
+            const userId = req.headers.userid;
+            const productUsers = await ProductUser.find();            
+            for (let i = 0; i < productUsers.length; i++) {
+                const obj = productUsers[i];                
+                if(obj.user == userId) {                    
+                    for (let p = 0; p < products.length; p++) {
+                        if(products[p].id == obj.product) {                            
+                            likedProducts.push(products[p].id)
+                        }
+                    }             
+                }
+            }
+        }
+                
         res.status(200).json(
         {
-            products            
+            products,
+            likedProducts
         });
-    })
-    .catch(err => {        
+    }    
+    catch(err) {        
         res.status(err.status || 500).json(
         {
             message: 'Cannot get products!'
         });
-    });
+    }
 }
 
 const createNewProduct = async(req, res) => {
@@ -30,7 +50,7 @@ const createNewProduct = async(req, res) => {
             return false;
         }
 
-        const authorId = req.body.headers.userId;
+        const authorId = req.headers.userid;
         const { name, description, url } = req.body;
 
         if(!url.startsWith('http'))
@@ -66,7 +86,7 @@ const likeProduct = async(req, res) => {
     const productId = req.params.id;
     
     if(await isAuth(req, res)){        
-        const userId = req.body.headers.userId;
+        const userId = req.headers.userid;
         
         Product.findById(productId).then(async product => {
             try {
@@ -83,13 +103,16 @@ const likeProduct = async(req, res) => {
                 const newLikesCount = product.likes + 1;
                 product.likes = newLikesCount;
                 product.save();
+                        
+                await ProductUser.create({
+                    product: productId,
+                    user: userId
+                })
+                
                 res.status(200).json(
                 {
                     message: 'Product was liked successfully!'
                 });
-                        
-                user.likedProductsIds.push(productId);                                           
-                await user.save();
             }                        
             catch(err) {
                 res.status(500).json(
