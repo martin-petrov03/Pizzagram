@@ -103,9 +103,9 @@ const Home = (props) => {
     );
   }else if(products.length) {      
     return (
-      <div>        
+      <div className="home-page">
+        <Link to="/product/add" className="add-link"><span className="material-icons">add_box</span></Link>
         <main className="main-container">
-        <Link to="/product/add" className="add-link"><span className="material-icons">add_box</span></Link>        
           {products.map(product => (
             <div className="product-item" key={product._id}>
               <img src={product.url} alt={product.name} />

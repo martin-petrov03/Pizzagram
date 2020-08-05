@@ -41,12 +41,13 @@ const laptopService = {
         }
         return res.status;        
     },
-    add: async(title, url, description, price) => {        
-        let res;
+    add: async(name, description, url) => {        
+        let res;        
         try {
-            res = await axios.post(BASE_URL + 'accessories/add', { title, url, description, price });   
+            res = await axios.post("http://localhost:3001/products/add",
+                { name, url, description });
         }
-        catch(err) {            
+        catch(err) {
             return err.response;
         }
         return res.status;

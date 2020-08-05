@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error from './pages/Error';
-import AddProduct from './pages/AddProduct';
+import AddProduct from './pages/AddProduct/AddProduct';
 import Navbar from "./components/Navbar/Navbar";
 
 function App() {
