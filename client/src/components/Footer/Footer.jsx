@@ -10,8 +10,10 @@ function Footer() {
             </div>
             <div className="right-side">
                 <h2>Contacts</h2>
-                <h4>Email: pizzeria@gmail.com</h4>
-                <h4>Phone: (541) 754-3010</h4>
+                <span class="material-icons">email</span>
+                <span class="material-icons">call</span>
+                <h3 className="contact-item">pizzeria@gmail.com</h3>
+                <h3>(541) 754-3010</h3>
             </div>
         </footer>
     );

@@ -1,32 +1,14 @@
-.main-footer{
-    display: flex;  
-    width: 90%;  
+.main-footer{    
     justify-items: space-between;
     text-align: center;
     font-size: 0.8em;
 }
   
 .main-footer .left-side, .main-footer .right-side {
-    width: 50%;
-}
-  
-.main-footer .right-side {  
-    margin: 0 auto;
+    margin: 0 auto;    
 }
   
 .main-footer .left-side .description {
     width: 80%;
-    margin: 0 auto;  
-}
-
-@media only screen and (min-width: 620px) {
-    .main-footer{    
-      width: 97vw;
-      margin: 0 auto;    
-      font-size: 1em;
-    }
-    
-    .main-footer .left-side, .main-footer .right-side {
-      width: 50%;
-    }
+    margin: 0 auto;
 }
