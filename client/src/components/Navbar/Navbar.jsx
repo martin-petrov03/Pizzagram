@@ -8,6 +8,11 @@ import authService from '../../services/auth-service';
 const Navbar = () => {
   const { logout, isAuthenticated } = useContext(AuthContext);
   
+  const logoutFunc = () => {
+    logout();
+    authService.logout();
+  }
+
   return (
     <nav className="nav">
       <Link to="/" className="site-logo">PIZZAS</Link>
@@ -16,7 +21,7 @@ const Navbar = () => {
           isAuthenticated || Cookies.get('token')
             ?(
               <Fragment>                
-                <li><Link to="" onClick={authService.logout}>Logout</Link></li>
+                <li><Link to="" onClick={logoutFunc}>Logout</Link></li>
               </Fragment>
             )
             : (

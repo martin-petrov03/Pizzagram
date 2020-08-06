@@ -99,14 +99,18 @@ const Home = (props) => {
   
   if(isLoading) {
     return (
-      <main className="main-container">
+      <main className="main-container">        
         <CircularProgress className="loader" />
       </main>
     );
   }else if(products.length) {      
     return (
       <div className="home-page">
-        <Link to="/product/add" className="add-link"><span className="material-icons">add_box</span></Link>
+        {
+          Cookies.get('token')
+          ? <Link to="/product/add" className="add-link"><span className="material-icons">add_box</span></Link>
+          : null
+        }
         <main className="main-container">
           {products.map(product => (
             <div className="product-item" key={product._id}>
@@ -128,7 +132,16 @@ const Home = (props) => {
         </div>        
     )
   }else {
-    return <><h2 className="main-message">No Products!</h2><br/></>
+    return (
+      <div className="home-page">
+        {
+          Cookies.get('token')
+          ? <Link to="/product/add" className="add-link"><span className="material-icons">add_box</span></Link>
+          : null
+        }
+        <h2 className="main-message">No Products!</h2><br/>
+      </div>
+    )
   }    
 }
 
