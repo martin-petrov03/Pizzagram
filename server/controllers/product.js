@@ -53,7 +53,7 @@ const createNewProduct = async(req, res) => {
         const authorId = req.headers.userid;
         const { name, description, url } = req.body;
 
-        if(!url.startsWith('http'))
+        if(!url.startsWith('http') || description.length > 200 || description.length < 35 || name.length < 5)
         {
             res.status(500).json(
             {
