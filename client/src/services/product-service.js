@@ -27,7 +27,7 @@ const laptopService = {
     like: async(productId) => {
         let res;
         try {
-            res = await axios.post('http://localhost:3001/products/like/' + productId);
+            res = await axios.post(BASE_URL + 'products/like/' + productId);
         }
         catch(err) {            
             return err.response.status;
@@ -37,7 +37,7 @@ const laptopService = {
     delete: async(productId) => {
         let res;        
         try {
-            res = await axios.post('http://localhost:3001/products/delete/' + productId);
+            res = await axios.post(BASE_URL + 'products/delete/' + productId);
         }
         catch(err) {
             return err.response.status;
@@ -47,7 +47,7 @@ const laptopService = {
     add: async(name, description, url) => {        
         let res;        
         try {
-            res = await axios.post("http://localhost:3001/products/add",
+            res = await axios.post(BASE_URL + 'products/add',
                 { name, url, description });
         }
         catch(err) {

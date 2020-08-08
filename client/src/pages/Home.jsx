@@ -42,10 +42,6 @@ const Home = (props) => {
       return;
     }
 
-    if(Cookies.get('likedProductsIds').includes(productId)) {
-      return;
-    }
-
     increaseLikes(productId);
     
     productService.like(productId)
