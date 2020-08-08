@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import authService from '../../services/auth-service';
 
 const Navbar = () => {
-  const { logout, isAuthenticated } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   
   const logoutFunc = () => {
     logout();
@@ -16,18 +16,18 @@ const Navbar = () => {
   return (
     <nav className="nav">
       <Link to="/" className="site-logo">PIZZAS</Link>
-      <ul>
-        {
-          isAuthenticated || Cookies.get('token')
-            ?(
-              <Fragment>                
-                <li><Link to="" onClick={logoutFunc}>Logout</Link></li>
+      <ul>  
+        {          
+          !Cookies.get('token') || Cookies.get('token').length === 0 
+            ? (
+              <Fragment>
+                <li><Link to="/login">Login</Link></li>
+                <li><Link to="/register">Register</Link></li>
               </Fragment>
             )
             : (
-              <Fragment>                      
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/register">Register</Link></li>
+              <Fragment>
+                <li><Link to="" onClick={logoutFunc}>Logout</Link></li>                
               </Fragment>)
         }          
       </ul>

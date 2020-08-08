@@ -40,22 +40,12 @@ const Home = (props) => {
     if(!Cookies.get('token')) {   
       props.history.push('/login');
       return;
-    }
+    }    
 
     increaseLikes(productId);
     
     productService.like(productId)
-      .then(() => {
-        let likedProductsIds = Cookies.get('likedProductsIds');        
-        
-        if(likedProductsIds.length) {
-          likedProductsIds += ` ${productId}`;
-        } else {
-          likedProductsIds = productId; 
-        }
-
-        Cookies.set('likedProductsIds', likedProductsIds);
-        
+      .then(() => {        
         setIsLiked(true);
       });
   }
